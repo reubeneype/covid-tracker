@@ -17,6 +17,7 @@ const Chart = ({data : { confirmed, deaths, recovered}}, country) => {
     },[]);
 
     const lineChart = (
+        
         dailyData.length
         ?(
         <Line 
@@ -33,16 +34,20 @@ const Chart = ({data : { confirmed, deaths, recovered}}, country) => {
                     borderColor: 'red',
                     backgroundColor: 'rgba(255,0,0,0.5)',
                     fill: true,
+                },{
+                    data: dailyData.map(({recovered})=> recovered),
+                    label: 'Recovered',
+                    borderColor: 'green',
+                    backgroundColor: 'rgba(0,255,0,0.5)',
+                    fill: true,
+
                 }],
             }}
         />) : null
     );
-    
-    console.log(country);
 
     const barChart = (
-        confirmed
-        ? (
+        confirmed ? (
             <Bar
                 data = {{
                     labels: ['Infected', 'Recovered', 'Deaths'],
@@ -64,10 +69,15 @@ const Chart = ({data : { confirmed, deaths, recovered}}, country) => {
             />
         ) : null
     );
+    
+    console.log(country,"counrety");
+    console.log(dailyData,"dailyData");
 
+    
+            
     return(
         <div className={styles.container}>
-            { country ? barChart : lineChart }
+            { country === {} ? lineChart : barChart }
         </div>
     )
 }
